@@ -1,12 +1,16 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import LottieView from "lottie-react-native";
 import { useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { useFooter } from './_layout';
 
 export default function Index() {
   const [loading, setLoading] = useState(true);
   const [showLanding, setShowLanding] = useState(false);
   const [progress, setProgress] = useState(0);
+  const { setShowFooter } = useFooter();
+  const router = useRouter();
 
   useEffect(() => {
     let interval: number;
@@ -71,7 +75,7 @@ export default function Index() {
           </View>
           <Text className="mt-2 text-sm text-gray-500">{progress}%</Text>
           {/* Developed by Prabu at the bottom */}
-          <View style={{ position: 'absolute', bottom: 24, width: '100%', alignItems: 'center' }}>
+          <View style={{ position: 'absolute', bottom: 0, width: '100%', alignItems: 'center', paddingBottom: 12 }}>
             <Text style={{ color: '#563e2e', fontSize: 14, fontWeight: '600', opacity: 0.7 }}>Developed by Prabu</Text>
           </View>
         </View>
@@ -101,7 +105,7 @@ export default function Index() {
             />
           </View>
         </View>
-        <View className="items-center mb-16">
+        <View className="items-center pb-4">
           <LinearGradient
             colors={["#FFDA09", "#FF6100"]}
             start={{ x: 0, y: 0 }}
@@ -122,7 +126,10 @@ export default function Index() {
             }}
           >
             <TouchableOpacity
-              onPress={() => setShowLanding(false)}
+              onPress={() => {
+                setShowFooter(true);
+                router.push('/home');
+              }}
               style={{ borderRadius: 9999 }}
               activeOpacity={0.85}
             >
