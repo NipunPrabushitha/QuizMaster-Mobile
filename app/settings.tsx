@@ -1,91 +1,110 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
+import Animated, {
+  FadeIn,
+  SlideInDown,
+  SlideInLeft
+} from 'react-native-reanimated';
 
 const Settings = () => {
   const [notifications, setNotifications] = useState(true);
   const [soundEffects, setSoundEffects] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   return (
-    <LinearGradient
-      colors={["#ffffffff", "#d49777ff"]}
-      style={{ flex: 1 }}
-    >
+    <View style={{ flex: 1, backgroundColor: '#1a1a1a' }}>
       <ScrollView className="flex-1" contentContainerStyle={{ flexGrow: 1 }}>
         {/* Logo Header */}
-        <View className="items-center pt-8 pb-6">
+        <Animated.View 
+          entering={FadeIn.delay(100).duration(600)}
+          className="items-center pb-6"
+          style={{ paddingTop: 60 }}
+        >
           <Image
             source={require("../assets/images/ui/QUIZ-MASTER-8-31-2025(2).png")}
             style={{ width: 300, height: 120, resizeMode: 'contain' }}
           />
-        </View>
+        </Animated.View>
 
         {/* Header Section */}
-        <View className="px-6 mb-8">
-          <Text className="text-3xl font-bold text-center mb-2" style={{ color: '#0404a5ff' }}>
+        <Animated.View 
+          entering={SlideInDown.delay(200).duration(600)}
+          className="px-6 mb-8"
+        >
+          <Text className="text-3xl font-bold text-center mb-2" style={{ color: '#ffffff' }}>
             Settings
           </Text>
-          <Text className="text-lg text-center text-gray-600">
+          <Text className="text-lg text-center" style={{ color: '#b0b0b0' }}>
             Customize your Quiz Master experience
           </Text>
-        </View>
+        </Animated.View>
 
         {/* Profile Section */}
-        <View className="px-6 mb-6">
-          <Text className="text-xl font-bold mb-4" style={{ color: '#0404a5ff' }}>Profile</Text>
-          <View className="bg-white rounded-xl p-4 shadow-sm mb-4">
+        <Animated.View 
+          entering={FadeIn.delay(300).duration(500)}
+          className="px-6 mb-8"
+        >
+          <Animated.View 
+            className="rounded-xl p-6" 
+            style={{ backgroundColor: '#2a2a2a' }}
+          >
             <View className="flex-row items-center">
-              <View className="w-16 h-16 rounded-full items-center justify-center mr-4" style={{ backgroundColor: '#0404a5ff' }}>
+              <View 
+                className="w-16 h-16 rounded-full items-center justify-center mr-4" 
+                style={{ backgroundColor: '#4CAF50' }}
+              >
                 <Text className="text-white text-2xl font-bold">U</Text>
               </View>
               <View className="flex-1">
-                <Text className="text-lg font-semibold" style={{ color: '#0404a5ff' }}>Quiz Master</Text>
-                <Text className="text-gray-600">Level 5 • 1,250 XP</Text>
+                <Text className="text-lg font-semibold" style={{ color: '#ffffff' }}>Quiz Master</Text>
+                <Text style={{ color: '#b0b0b0' }}>Level 5 • 1,250 Points</Text>
               </View>
               <TouchableOpacity>
-                <Text style={{ color: '#FF6100' }}>Edit</Text>
+                <Text style={{ color: '#4CAF50', fontSize: 16, fontWeight: '600' }}>Edit</Text>
               </TouchableOpacity>
             </View>
-          </View>
-        </View>
+          </Animated.View>
+        </Animated.View>
 
         {/* App Settings */}
-        <View className="px-6 mb-6">
-          <Text className="text-xl font-bold mb-4" style={{ color: '#0404a5ff' }}>App Settings</Text>
+        <Animated.View 
+          entering={SlideInLeft.delay(400).duration(600)}
+          className="px-6 mb-8"
+        >
+          <Text className="text-xl font-bold mb-4" style={{ color: '#ffffff' }}>App Settings</Text>
           
-          <View className="bg-white rounded-xl shadow-sm">
+          <View className="rounded-xl" style={{ backgroundColor: '#2a2a2a' }}>
             {/* Notifications */}
-            <View className="flex-row items-center justify-between p-4 border-b border-gray-100">
+            <View className="flex-row items-center justify-between p-4 border-b" style={{ borderBottomColor: '#404040' }}>
               <View className="flex-row items-center flex-1">
                 <Text className="text-2xl mr-3">🔔</Text>
                 <View>
-                  <Text className="text-lg font-medium" style={{ color: '#0404a5ff' }}>Notifications</Text>
-                  <Text className="text-gray-600 text-sm">Get reminders and updates</Text>
+                  <Text className="text-lg font-medium" style={{ color: '#ffffff' }}>Notifications</Text>
+                  <Text style={{ color: '#b0b0b0', fontSize: 14 }}>Get reminders and updates</Text>
                 </View>
               </View>
               <Switch
                 value={notifications}
                 onValueChange={setNotifications}
-                trackColor={{ false: '#e5e7eb', true: '#FFDA09' }}
-                thumbColor={notifications ? '#0404a5ff' : '#9ca3af'}
+                trackColor={{ false: '#404040', true: '#4CAF50' }}
+                thumbColor={notifications ? '#ffffff' : '#808080'}
               />
             </View>
 
             {/* Sound Effects */}
-            <View className="flex-row items-center justify-between p-4 border-b border-gray-100">
+            <View className="flex-row items-center justify-between p-4 border-b" style={{ borderBottomColor: '#404040' }}>
               <View className="flex-row items-center flex-1">
                 <Text className="text-2xl mr-3">🔊</Text>
                 <View>
-                  <Text className="text-lg font-medium" style={{ color: '#0404a5ff' }}>Sound Effects</Text>
-                  <Text className="text-gray-600 text-sm">Play sounds for interactions</Text>
+                  <Text className="text-lg font-medium" style={{ color: '#ffffff' }}>Sound Effects</Text>
+                  <Text style={{ color: '#b0b0b0', fontSize: 14 }}>Play sounds for interactions</Text>
                 </View>
               </View>
               <Switch
                 value={soundEffects}
                 onValueChange={setSoundEffects}
-                trackColor={{ false: '#e5e7eb', true: '#FFDA09' }}
-                thumbColor={soundEffects ? '#0404a5ff' : '#9ca3af'}
+                trackColor={{ false: '#404040', true: '#4CAF50' }}
+                thumbColor={soundEffects ? '#ffffff' : '#808080'}
               />
             </View>
 
@@ -94,83 +113,79 @@ const Settings = () => {
               <View className="flex-row items-center flex-1">
                 <Text className="text-2xl mr-3">🌙</Text>
                 <View>
-                  <Text className="text-lg font-medium" style={{ color: '#0404a5ff' }}>Dark Mode</Text>
-                  <Text className="text-gray-600 text-sm">Switch to dark theme</Text>
+                  <Text className="text-lg font-medium" style={{ color: '#ffffff' }}>Dark Mode</Text>
+                  <Text style={{ color: '#b0b0b0', fontSize: 14 }}>Switch to dark theme</Text>
                 </View>
               </View>
               <Switch
                 value={darkMode}
                 onValueChange={setDarkMode}
-                trackColor={{ false: '#e5e7eb', true: '#FFDA09' }}
-                thumbColor={darkMode ? '#0404a5ff' : '#9ca3af'}
+                trackColor={{ false: '#404040', true: '#4CAF50' }}
+                thumbColor={darkMode ? '#ffffff' : '#808080'}
               />
             </View>
           </View>
-        </View>
+        </Animated.View>
 
-        {/* Other Options */}
-        <View className="px-6 mb-6">
-          <Text className="text-xl font-bold mb-4" style={{ color: '#0404a5ff' }}>More</Text>
+        {/* Quick Actions */}
+        <Animated.View 
+          entering={FadeIn.delay(500).duration(500)}
+          className="px-6 mb-8"
+        >
+          <Text className="text-xl font-bold mb-4" style={{ color: '#ffffff' }}>Quick Actions</Text>
           
-          <View className="bg-white rounded-xl shadow-sm">
-            <TouchableOpacity className="flex-row items-center p-4 border-b border-gray-100">
+          <View className="rounded-xl" style={{ backgroundColor: '#2a2a2a' }}>
+            <TouchableOpacity className="flex-row items-center p-4 border-b" style={{ borderBottomColor: '#404040' }}>
               <Text className="text-2xl mr-3">📊</Text>
               <View className="flex-1">
-                <Text className="text-lg font-medium" style={{ color: '#0404a5ff' }}>Statistics</Text>
-                <Text className="text-gray-600 text-sm">View your progress</Text>
+                <Text className="text-lg font-medium" style={{ color: '#ffffff' }}>View Statistics</Text>
+                <Text style={{ color: '#b0b0b0', fontSize: 14 }}>Check your progress</Text>
               </View>
-              <Text className="text-gray-400">›</Text>
+              <Text style={{ color: '#808080' }}>›</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex-row items-center p-4 border-b border-gray-100">
+            <TouchableOpacity className="flex-row items-center p-4 border-b" style={{ borderBottomColor: '#404040' }}>
               <Text className="text-2xl mr-3">❓</Text>
               <View className="flex-1">
-                <Text className="text-lg font-medium" style={{ color: '#0404a5ff' }}>Help & Support</Text>
-                <Text className="text-gray-600 text-sm">Get help and contact us</Text>
+                <Text className="text-lg font-medium" style={{ color: '#ffffff' }}>Help & Support</Text>
+                <Text style={{ color: '#b0b0b0', fontSize: 14 }}>Get help when needed</Text>
               </View>
-              <Text className="text-gray-400">›</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity className="flex-row items-center p-4 border-b border-gray-100">
-              <Text className="text-2xl mr-3">🔒</Text>
-              <View className="flex-1">
-                <Text className="text-lg font-medium" style={{ color: '#0404a5ff' }}>Privacy Policy</Text>
-                <Text className="text-gray-600 text-sm">Read our privacy policy</Text>
-              </View>
-              <Text className="text-gray-400">›</Text>
+              <Text style={{ color: '#808080' }}>›</Text>
             </TouchableOpacity>
 
             <TouchableOpacity className="flex-row items-center p-4">
               <Text className="text-2xl mr-3">ℹ️</Text>
               <View className="flex-1">
-                <Text className="text-lg font-medium" style={{ color: '#0404a5ff' }}>About</Text>
-                <Text className="text-gray-600 text-sm">App version and info</Text>
+                <Text className="text-lg font-medium" style={{ color: '#ffffff' }}>About</Text>
+                <Text style={{ color: '#b0b0b0', fontSize: 14 }}>App info and version</Text>
               </View>
-              <Text className="text-gray-400">›</Text>
+              <Text style={{ color: '#808080' }}>›</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </Animated.View>
 
-        {/* Logout */}
-        <View className="px-6 mb-8">
+        {/* Logout Button */}
+        <Animated.View 
+          entering={FadeIn.delay(600).duration(500)}
+          className="px-6 mb-8"
+        >
           <TouchableOpacity>
-            <LinearGradient
-              colors={["#ef4444", "#dc2626"]}
-              className="rounded-xl p-4"
-              style={{ shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8 }}
+            <View 
+              className="rounded-2xl p-4"
+              style={{ backgroundColor: '#FF5252' }}
             >
               <Text className="text-white text-xl font-bold text-center">Logout</Text>
-            </LinearGradient>
+            </View>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
 
         {/* Footer */}
         <View className="items-center pb-6">
-          <Text className="text-gray-500 text-sm">Developed by Prabu</Text>
-          <Text className="text-gray-400 text-xs mt-1">Version 1.0.0</Text>
+          <Text style={{ color: '#808080', fontSize: 14 }}>Developed by Prabu</Text>
+          <Text style={{ color: '#606060', fontSize: 12, marginTop: 4 }}>Version 1.0.0</Text>
         </View>
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 };
 

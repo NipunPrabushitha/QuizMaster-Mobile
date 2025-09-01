@@ -1,87 +1,189 @@
-import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Animated, {
+  FadeIn,
+  SlideInDown,
+  SlideInLeft,
+  SlideInRight,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming
+} from 'react-native-reanimated';
 
 const Home = () => {
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(50);
+
+  useEffect(() => {
+    opacity.value = withTiming(1, { duration: 800 });
+    translateY.value = withSpring(0, { damping: 15 });
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+      transform: [{ translateY: translateY.value }],
+    };
+  });
+
   return (
-    <LinearGradient
-      colors={["#ffffffff", "#d49777ff"]}
-      style={{ flex: 1 }}
-    >
+    <View style={{ flex: 1, backgroundColor: '#1a1a1a' }}>
       <ScrollView className="flex-1" contentContainerStyle={{ flexGrow: 1 }}>
         {/* Logo Header */}
-        <View className="items-center pt-8 pb-6">
+        <Animated.View 
+          entering={FadeIn.delay(100).duration(600)}
+          className="items-center pb-6"
+          style={{ paddingTop: 60 }}
+        >
           <Image
             source={require("../assets/images/ui/QUIZ-MASTER-8-31-2025(2).png")}
             style={{ width: 300, height: 120, resizeMode: 'contain' }}
           />
-        </View>
+        </Animated.View>
 
         {/* Welcome Section */}
-        <View className="px-6 mb-8">
-          <Text className="text-3xl font-bold text-center mb-2" style={{ color: '#0404a5ff' }}>
+        <Animated.View 
+          entering={SlideInDown.delay(200).duration(600)}
+          className="px-6 mb-8"
+        >
+          <Text className="text-3xl font-bold text-center mb-2" style={{ color: '#ffffff' }}>
             Welcome Back!
           </Text>
-          <Text className="text-lg text-center text-gray-600">
+          <Text className="text-lg text-center" style={{ color: '#b0b0b0' }}>
             Ready to challenge your knowledge?
           </Text>
-        </View>
+        </Animated.View>
 
         {/* Quick Stats */}
-        <View className="flex-row justify-around px-6 mb-8">
-          <View className="items-center bg-white rounded-xl p-4 shadow-lg" style={{ minWidth: 100 }}>
-            <Text className="text-2xl font-bold" style={{ color: '#0404a5ff' }}>42</Text>
-            <Text className="text-gray-600">Quizzes</Text>
-          </View>
-          <View className="items-center bg-white rounded-xl p-4 shadow-lg" style={{ minWidth: 100 }}>
-            <Text className="text-2xl font-bold" style={{ color: '#FF6100' }}>85%</Text>
-            <Text className="text-gray-600">Accuracy</Text>
-          </View>
-          <View className="items-center bg-white rounded-xl p-4 shadow-lg" style={{ minWidth: 100 }}>
-            <Text className="text-2xl font-bold" style={{ color: '#FFDA09' }}>12</Text>
-            <Text className="text-gray-600">Streak</Text>
-          </View>
-        </View>
+        <Animated.View 
+          entering={SlideInLeft.delay(300).duration(600)}
+          className="flex-row justify-around px-6 mb-8"
+        >
+          <Animated.View 
+            entering={FadeIn.delay(400).duration(500)}
+            className="items-center rounded-xl p-4" 
+            style={{ minWidth: 100, backgroundColor: '#2a2a2a' }}
+          >
+            <Text className="text-2xl font-bold" style={{ color: '#4CAF50' }}>42</Text>
+            <Text style={{ color: '#b0b0b0' }}>Quizzes</Text>
+          </Animated.View>
+          <Animated.View 
+            entering={FadeIn.delay(500).duration(500)}
+            className="items-center rounded-xl p-4" 
+            style={{ minWidth: 100, backgroundColor: '#2a2a2a' }}
+          >
+            <Text className="text-2xl font-bold" style={{ color: '#FF9800' }}>85%</Text>
+            <Text style={{ color: '#b0b0b0' }}>Accuracy</Text>
+          </Animated.View>
+          <Animated.View 
+            entering={FadeIn.delay(600).duration(500)}
+            className="items-center rounded-xl p-4" 
+            style={{ minWidth: 100, backgroundColor: '#2a2a2a' }}
+          >
+            <Text className="text-2xl font-bold" style={{ color: '#FFC107' }}>1250</Text>
+            <Text style={{ color: '#b0b0b0' }}>Points</Text>
+          </Animated.View>
+        </Animated.View>
 
-        {/* Action Buttons */}
-        <View className="px-6 space-y-4">
-          <TouchableOpacity>
-            <LinearGradient
-              colors={["#0404a5ff", "#6366f1"]}
-              className="rounded-xl p-4 mb-4"
-              style={{ shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8 }}
-            >
-              <Text className="text-white text-xl font-bold text-center">Start New Quiz</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+        {/* Main Action Cards */}
+        <Animated.View 
+          entering={SlideInRight.delay(400).duration(600)}
+          className="px-6 space-y-4"
+        >
+          {/* Start Quiz Card */}
+          <Animated.View entering={FadeIn.delay(700).duration(500)}>
+            <TouchableOpacity>
+              <View 
+                className="rounded-2xl p-6 mb-4 relative overflow-hidden"
+                style={{ backgroundColor: '#2196F3' }}
+              >
+                <View className="flex-row justify-between items-center">
+                  <View className="flex-1 pr-4">
+                    <Text className="text-white text-2xl font-bold mb-2">Start Quiz</Text>
+                    <Text className="text-blue-100 text-base">
+                      Test your knowledge with our exciting quizzes
+                    </Text>
+                  </View>
+                  <View className="absolute top-2 right-2">
+                    <Image
+                      source={require("../assets/images/ui/icons/brain.png")}
+                      style={{ width: 40, height: 40, resizeMode: 'contain' }}
+                    />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </Animated.View>
 
-          <TouchableOpacity>
-            <LinearGradient
-              colors={["#FFDA09", "#FF6100"]}
-              className="rounded-xl p-4 mb-4"
-              style={{ shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8 }}
-            >
-              <Text className="text-white text-xl font-bold text-center">Continue Learning</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+          {/* Top Players Card */}
+          <Animated.View entering={FadeIn.delay(750).duration(500)}>
+            <TouchableOpacity>
+              <View 
+                className="rounded-2xl p-6 mb-4 relative overflow-hidden"
+                style={{ backgroundColor: '#FF9800' }}
+              >
+                <View className="flex-row justify-between items-center">
+                  <View className="flex-1 pr-4">
+                    <Text className="text-white text-2xl font-bold mb-2">Top Players</Text>
+                    <Text className="text-orange-100 text-base">
+                      See who's leading the leaderboard
+                    </Text>
+                  </View>
+                  <View className="absolute top-2 right-2">
+                    <Image
+                      source={require("../assets/images/ui/Astronaut_Duck_Illustration-removebg-preview.png")}
+                      style={{ width: 50, height: 50, resizeMode: 'contain' }}
+                    />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </Animated.View>
 
-          <TouchableOpacity>
-            <View className="bg-white rounded-xl p-4 border-2" style={{ borderColor: '#0404a5ff' }}>
-              <Text className="text-xl font-bold text-center" style={{ color: '#0404a5ff' }}>View Progress</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+          {/* Categories Card */}
+          <Animated.View entering={FadeIn.delay(800).duration(500)}>
+            <TouchableOpacity>
+              <View 
+                className="rounded-2xl p-6 mb-4 relative overflow-hidden"
+                style={{ backgroundColor: '#4CAF50' }}
+              >
+                <View className="flex-row justify-between items-center">
+                  <View className="flex-1 pr-4">
+                    <Text className="text-white text-2xl font-bold mb-2">Categories</Text>
+                    <Text className="text-green-100 text-base">
+                      Explore different quiz categories
+                    </Text>
+                  </View>
+                  <View className="absolute top-2 right-2">
+                    <Image
+                      source={require("../assets/images/ui/icons/abc.png")}
+                      style={{ width: 40, height: 40, resizeMode: 'contain' }}
+                    />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </Animated.View>
+        </Animated.View>
 
         {/* Recent Activity */}
-        <View className="px-6 mt-8 mb-6">
-          <Text className="text-xl font-bold mb-4" style={{ color: '#0404a5ff' }}>Recent Activity</Text>
-          <View className="bg-white rounded-xl p-4 shadow-sm">
-            <Text className="text-gray-600">🎯 Completed "Math Basics" - 90% score</Text>
-            <Text className="text-gray-500 text-sm mt-1">2 hours ago</Text>
-          </View>
-        </View>
+        <Animated.View 
+          entering={SlideInDown.delay(500).duration(600)}
+          className="px-6 mt-8 mb-6"
+        >
+          <Text className="text-xl font-bold mb-4" style={{ color: '#ffffff' }}>Recent Activity</Text>
+          <Animated.View 
+            entering={FadeIn.delay(900).duration(500)}
+            className="rounded-xl p-4"
+            style={{ backgroundColor: '#2a2a2a' }}
+          >
+            <Text style={{ color: '#b0b0b0' }}>🎯 Completed "Math Basics" - 90% score</Text>
+            <Text style={{ color: '#808080', fontSize: 12, marginTop: 4 }}>2 hours ago</Text>
+          </Animated.View>
+        </Animated.View>
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 };
 

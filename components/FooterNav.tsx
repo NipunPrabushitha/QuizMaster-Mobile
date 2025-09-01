@@ -1,36 +1,82 @@
-import { useRouter, useSegments } from 'expo-router'
-import React from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { useRouter, useSegments } from "expo-router";
+import React from "react";
+import { Dimensions, Pressable, StyleSheet, View } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const tabs = [
-    {label: 'Home', path: '/home'},
-    {label: 'Notes', path: '/notes'},
-    {label: 'Settings', path: '/settings'}
-] as const
-const FooterNav = () => {
-    const router = useRouter();
-    const segments = useSegments(); //["progect"]
-    const activeRouter = "/" + (segments[0] || "");
-  return (
-    <View className="flex-row justify-around border-gray-300 py-2 bg-white">
-      {/* {tabs.map(() => {
-        return <View></View>
-      })} */}
-      {tabs.map((data, index) => (
-        <Pressable
-          key={index}
-          // data.path === activeRouter -> this button is active
-          //   "" + "" -> ` ${can use varibles like any} `
-          className={`py-1 px-4 rounded-lg ${data?.path === activeRouter ? "bg-blue-600" : ""}`}
-          onPress={() => {
-            router.push(data?.path)
-          }}
-        >
-          <Text className="text-2xl">{data?.label}</Text>
-        </Pressable>
-      ))}
-    </View>
-  )
-}
+  { label: "Home", path: "/home", icon: "home-variant-outline", activeIcon: "home-variant" },
+  { label: "Notes", path: "/notes", icon: "notebook-outline", activeIcon: "notebook" },
+  { label: "Settings", path: "/settings", icon: "cog-outline", activeIcon: "cog" },
+] as const;
 
-export default FooterNav
+const FooterNav = () => {
+  const router = useRouter();
+  const segment = useSegments();
+  const activeRouter = "/" + (segment[0] || "");
+  const { width } = Dimensions.get("window");
+
+  return (
+    <View style={[styles.footer, { width }]}> 
+      {tabs.map((tab, idx) => {
+        const isActive = tab.path === activeRouter;
+        return (
+          <Pressable
+            key={tab.path}
+            style={[styles.tab, isActive && styles.activeTab]}
+            onPress={() => router.push(tab.path)}
+          >
+            <Icon
+              name={isActive ? tab.activeIcon : tab.icon}
+              size={22}
+              color={isActive ? "#ffffff" : "#808080"}
+              style={{ marginBottom: 1 }}
+            />
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 8,
+    backgroundColor: "#2a2a2a",
+    borderRadius: 20,
+    width: '85%',
+    alignSelf: 'center',
+    marginBottom: 25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 15,
+    elevation: 15,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderWidth: 1,
+    borderColor: "#404040",
+  },
+  tab: {
+    flex: 1,
+    alignItems: "center",
+    paddingVertical: 8,
+    borderRadius: 16,
+    marginHorizontal: 4,
+    backgroundColor: "transparent",
+  },
+  activeTab: {
+    backgroundColor: "#4CAF50",
+    shadowColor: "#4CAF50",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+});
+
+export default FooterNav;
