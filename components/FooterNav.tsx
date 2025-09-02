@@ -1,6 +1,6 @@
 import { useRouter, useSegments } from "expo-router";
 import React from "react";
-import { Dimensions, Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const tabs = [
@@ -13,10 +13,9 @@ const FooterNav = () => {
   const router = useRouter();
   const segment = useSegments();
   const activeRouter = "/" + (segment[0] || "");
-  const { width } = Dimensions.get("window");
 
   return (
-    <View style={[styles.footer, { width }]}> 
+    <View style={styles.footer}> 
       {tabs.map((tab, idx) => {
         const isActive = tab.path === activeRouter;
         return (
@@ -27,10 +26,17 @@ const FooterNav = () => {
           >
             <Icon
               name={isActive ? tab.activeIcon : tab.icon}
-              size={22}
+              size={24}
               color={isActive ? "#ffffff" : "#808080"}
-              style={{ marginBottom: 1 }}
+              style={{ marginBottom: 4 }}
             />
+            <Text style={{ 
+              color: isActive ? "#ffffff" : "#808080", 
+              fontSize: 12, 
+              fontWeight: isActive ? '600' : '400'
+            }}>
+              {tab.label}
+            </Text>
           </Pressable>
         );
       })}
@@ -43,23 +49,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingVertical: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
     backgroundColor: "#2a2a2a",
-    borderRadius: 20,
-    width: '85%',
-    alignSelf: 'center',
+    borderRadius: 25,
+    marginHorizontal: 20,
     marginBottom: 25,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.25,
     shadowRadius: 15,
     elevation: 15,
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
     borderWidth: 1,
     borderColor: "#404040",
+    minHeight: 60,
   },
   tab: {
     flex: 1,

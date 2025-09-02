@@ -1,23 +1,41 @@
+import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
-    FadeIn,
-    SlideInDown,
-    SlideInLeft,
-    SlideInRight,
-    useSharedValue,
-    withSpring,
-    withTiming
+  FadeIn,
+  SlideInDown,
+  SlideInLeft,
+  SlideInRight,
+  useSharedValue,
+  withSpring,
+  withTiming
 } from 'react-native-reanimated';
+import { useAuth } from '../contexts/AuthContext';
 
 const Notes = () => {
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(30);
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
 
+  // Redirect to login if not authenticated
   useEffect(() => {
+    if (!isLoading && !user) {
+      router.replace('/');
+    }
+  }, [user, isLoading]);  useEffect(() => {
     opacity.value = withTiming(1, { duration: 600 });
     translateY.value = withSpring(0, { damping: 12 });
   }, []);
+
+  // Show loading or return null while checking auth
+  if (isLoading || !user) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#1a1a1a', justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: '#ffffff', fontSize: 18 }}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1a1a1a' }}>

@@ -7,6 +7,7 @@ import Animated, {
   SlideInDown,
   SlideInUp
 } from 'react-native-reanimated';
+import { useAuth } from '../contexts/AuthContext';
 import { useFooter } from './_layout';
 
 export default function Index() {
@@ -14,6 +15,7 @@ export default function Index() {
   const [showLanding, setShowLanding] = useState(false);
   const [progress, setProgress] = useState(0);
   const { setShowFooter } = useFooter();
+  const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -24,7 +26,17 @@ export default function Index() {
           if (prev >= 100) {
             clearInterval(interval);
             setLoading(false);
-            setShowLanding(true);
+            // Check auth state after loading
+            setTimeout(() => {
+              if (!authLoading) {
+                if (user) {
+                  setShowFooter(true);
+                  router.replace('/home');
+                } else {
+                  setShowLanding(true);
+                }
+              }
+            }, 500);
             return 100;
           }
           return prev + 2;
@@ -32,9 +44,21 @@ export default function Index() {
       }, 80);
     }
     return () => clearInterval(interval);
-  }, [loading]);
+  }, [loading, authLoading, user]);
 
-  if (loading) {
+  // Wait for auth loading to complete
+  useEffect(() => {
+    if (!authLoading && !loading) {
+      if (user) {
+        setShowFooter(true);
+        router.replace('/home');
+      } else {
+        setShowLanding(true);
+      }
+    }
+  }, [authLoading, user, loading]);
+
+  if (loading || authLoading) {
     return (
       <View style={{ flex: 1, backgroundColor: '#1a1a1a' }}>
         <View className="flex-1 justify-center items-center px-6" style={{ paddingTop: 30 }}>
@@ -206,8 +230,7 @@ export default function Index() {
           >
             <TouchableOpacity
               onPress={() => {
-                setShowFooter(true);
-                router.push('/home');
+                router.push('/login');
               }}
               activeOpacity={0.8}
             >

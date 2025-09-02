@@ -1,15 +1,65 @@
-import React, { useState } from 'react';
-import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { Alert, Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   FadeIn,
   SlideInDown,
   SlideInLeft
 } from 'react-native-reanimated';
+import { useAuth } from '../contexts/AuthContext';
 
 const Settings = () => {
   const [notifications, setNotifications] = useState(true);
   const [soundEffects, setSoundEffects] = useState(true);
   const [darkMode, setDarkMode] = useState(true);
+  const { user, logout, isLoading } = useAuth();
+  const router = useRouter();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.replace('/');
+    }
+  }, [user, isLoading]);
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            await logout();
+            router.replace('/');
+          },
+        },
+      ]
+    );
+  };
+
+  const getUserInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  // Show loading or return null while checking auth
+  if (isLoading || !user) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#1a1a1a', justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: '#ffffff', fontSize: 18 }}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1a1a1a' }}>
@@ -53,11 +103,17 @@ const Settings = () => {
                 className="w-16 h-16 rounded-full items-center justify-center mr-4" 
                 style={{ backgroundColor: '#4CAF50' }}
               >
-                <Text className="text-white text-2xl font-bold">U</Text>
+                <Text className="text-white text-2xl font-bold">
+                  {user ? getUserInitials(user.name) : 'U'}
+                </Text>
               </View>
               <View className="flex-1">
-                <Text className="text-lg font-semibold" style={{ color: '#ffffff' }}>Quiz Master</Text>
-                <Text style={{ color: '#b0b0b0' }}>Level 5 • 1,250 Points</Text>
+                <Text className="text-lg font-semibold" style={{ color: '#ffffff' }}>
+                  {user ? user.name : 'Quiz Master'}
+                </Text>
+                <Text style={{ color: '#b0b0b0' }}>
+                  {user ? user.email : 'Level 5 • 1,250 Points'}
+                </Text>
               </View>
               <TouchableOpacity>
                 <Text style={{ color: '#4CAF50', fontSize: 16, fontWeight: '600' }}>Edit</Text>
@@ -169,7 +225,7 @@ const Settings = () => {
           entering={FadeIn.delay(600).duration(500)}
           className="px-6 mb-8"
         >
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleLogout}>
             <View 
               className="rounded-2xl p-4"
               style={{ backgroundColor: '#FF5252' }}
