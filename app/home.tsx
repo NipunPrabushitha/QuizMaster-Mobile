@@ -101,7 +101,7 @@ const Home = () => {
             className="items-center rounded-xl p-4" 
             style={{ minWidth: 100, backgroundColor: '#2a2a2a' }}
           >
-            <Text className="text-2xl font-bold" style={{ color: '#FFC107' }}>1250</Text>
+            <Text className="text-2xl font-bold" style={{ color: '#FFC107' }}>120</Text>
             <Text style={{ color: '#b0b0b0' }}>Points</Text>
           </Animated.View>
         </Animated.View>
