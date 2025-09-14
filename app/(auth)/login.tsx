@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Animated, { FadeIn, SlideInDown } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -37,7 +37,7 @@ export default function Login() {
       Alert.alert('Error', 'Invalid email or password');
     }
   };  const handleRegister = () => {
-    router.push('/register');
+    router.push('/(auth)/register');
   };
 
   return (
@@ -69,7 +69,7 @@ export default function Login() {
           className="items-center mb-12"
         >
           <Image
-            source={require("../assets/images/ui/QUIZ-MASTER-8-31-2025(2).png")}
+            source={require("../../assets/images/ui/QUIZ-MASTER-8-31-2025(2).png")}
             style={{ width: 300, height: 120, resizeMode: 'contain', marginBottom: 20 }}
           />
           <Text style={{ color: '#ffffff', fontSize: 28, fontWeight: 'bold', textAlign: 'center' }}>

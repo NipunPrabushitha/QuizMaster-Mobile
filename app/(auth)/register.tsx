@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Animated, { FadeIn, SlideInDown } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -52,7 +52,7 @@ export default function Register() {
   };
 
   const handleLogin = () => {
-    router.push('/login');
+    router.push('/(auth)/login');
   };
 
   return (
@@ -94,7 +94,7 @@ export default function Register() {
           className="items-center mb-8"
         >
           <Image
-            source={require("../assets/images/ui/QUIZ-MASTER-8-31-2025(2).png")}
+            source={require("../../assets/images/ui/QUIZ-MASTER-8-31-2025(2).png")}
             style={{ width: 280, height: 110, resizeMode: 'contain', marginBottom: 16 }}
           />
           <Text style={{ color: '#ffffff', fontSize: 26, fontWeight: 'bold', textAlign: 'center' }}>
