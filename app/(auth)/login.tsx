@@ -37,7 +37,7 @@ export default function Login() {
       Alert.alert('Error', 'Invalid email or password');
     }
   };  const handleRegister = () => {
-    router.push('/(auth)/register');
+    router.push('/register');
   };
 
   return (
@@ -170,22 +170,6 @@ export default function Login() {
               {isLoading ? 'Signing In...' : 'Sign In'}
             </Text>
           </TouchableOpacity>
-
-          {/* Demo Credentials */}
-          <View 
-            className="p-4 rounded-xl mb-4"
-            style={{ backgroundColor: '#2a2a2a', borderWidth: 1, borderColor: '#404040' }}
-          >
-            <Text style={{ color: '#4CAF50', fontSize: 14, fontWeight: '600', marginBottom: 8 }}>
-              Demo Credentials:
-            </Text>
-            <Text style={{ color: '#b0b0b0', fontSize: 13 }}>
-              Email: test@gmail.com
-            </Text>
-            <Text style={{ color: '#b0b0b0', fontSize: 13 }}>
-              Password: 123456
-            </Text>
-          </View>
 
           {/* Register Link */}
           <View className="flex-row justify-center items-center">

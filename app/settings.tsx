@@ -36,20 +36,16 @@ const Settings = () => {
           style: 'destructive',
           onPress: async () => {
             await logout();
-            router.replace('/');
+            router.replace('/(auth)/login');
           },
         },
       ]
     );
   };
 
-  const getUserInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(word => word.charAt(0))
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
+  const getUserInitials = (email: string) => {
+    // Get first two characters from the email address
+    return email.slice(0, 2).toUpperCase();
   };
 
   // Show loading or return null while checking auth
@@ -104,12 +100,12 @@ const Settings = () => {
                 style={{ backgroundColor: '#4CAF50' }}
               >
                 <Text className="text-white text-2xl font-bold">
-                  {user ? getUserInitials(user.name) : 'U'}
+                  {user ? getUserInitials(user.email || '') : 'U'}
                 </Text>
               </View>
               <View className="flex-1">
                 <Text className="text-lg font-semibold" style={{ color: '#ffffff' }}>
-                  {user ? user.name : 'Quiz Master'}
+                  {user ? user.email?.split('@')[0] : 'Quiz Master'}
                 </Text>
                 <Text style={{ color: '#b0b0b0' }}>
                   {user ? user.email : 'Level 5 • 1,250 Points'}

@@ -68,7 +68,7 @@ const Home = () => {
           className="px-6 mb-8"
         >
           <Text className="text-3xl font-bold text-center mb-2" style={{ color: '#ffffff' }}>
-            Welcome Back, {user.name.split(' ')[0]}!
+            Welcome Back, {user.email?.split('@')[0]}!
           </Text>
           <Text className="text-lg text-center" style={{ color: '#b0b0b0' }}>
             Ready to challenge your knowledge?
