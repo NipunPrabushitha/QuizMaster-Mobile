@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const tabs = [
   { label: "Home", path: "/home", icon: "home-variant-outline", activeIcon: "home-variant" },
-  { label: "Notes", path: "/notes", icon: "notebook-outline", activeIcon: "notebook" },
+  { label: "Notes", path: "/note", icon: "notebook-outline", activeIcon: "notebook" },
   { label: "Settings", path: "/settings", icon: "cog-outline", activeIcon: "cog" },
 ] as const;
 

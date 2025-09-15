@@ -4,6 +4,7 @@ export default function DashboardLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="quiz/index" />
+      <Stack.Screen name="notes/index" />
     </Stack>
   );
 }

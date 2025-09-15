@@ -21,7 +21,7 @@ const LayoutContent = () => {
   const segments = useSegments();
   
   // Define routes where footer should be shown
-  const footerRoutes = ['home', 'notes', 'settings'];
+  const footerRoutes = ['home', 'note', 'settings'];
   const currentRoute = segments[0] || '';
 
   // Show footer only on authenticated pages and specific routes
