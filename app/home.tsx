@@ -113,7 +113,7 @@ const Home = () => {
         >
           {/* Start Quiz Card */}
           <Animated.View entering={FadeIn.delay(700).duration(500)}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/quiz')}>
               <View 
                 className="rounded-2xl p-6 mb-4 relative overflow-hidden"
                 style={{ backgroundColor: '#2196F3' }}
