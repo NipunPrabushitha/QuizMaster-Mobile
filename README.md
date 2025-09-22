@@ -1,50 +1,82 @@
-# Welcome to your Expo app 👋
+# Quiz Master 🧠
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Quiz Master is a cross-platform mobile application built with React Native and Expo. It allows users to test their knowledge through various quizzes, manage study notes, and track their progress. The app features a sleek, modern, dark-themed UI with smooth animations.
 
-## Get started
+## ✨ Features
 
-1. Install dependencies
+-   **Authentication**: Secure user registration and login using Firebase Authentication.
+-   **Interactive Quizzes**: A timed, multiple-choice quiz system with instant feedback.
+-   **Scoring & Results**: A detailed results screen showing the score, percentage, and performance message.
+-   **Note Management (CRUD)**: Users can create, read, update, and delete their personal study notes.
+-   **Navigation**: File-based routing handled by Expo Router.
+-   **Styling**: Styled with NativeWind (Tailwind CSS for React Native).
+-   **Firebase Integration**: Uses Firebase for authentication and Firestore for storing user notes.
 
-   ```bash
-   npm install
-   ```
+## 🛠️ Tech Stack
 
-2. Start the app
+-   **Framework**: React Native with Expo
+-   **Language**: TypeScript
+-   **Backend**: Firebase (Authentication, Firestore)
+-   **Navigation**: Expo Router
+-   **Styling**: NativeWind / Tailwind CSS
+-   **Animation**: React Native Reanimated
+-   **Icons**: `react-native-vector-icons`
 
-   ```bash
-   npx expo start
-   ```
+## 🚀 Getting Started
 
-In the output, you'll find options to open the app in a
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Prerequisites
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+-   Node.js (LTS version recommended)
+-   npm or yarn
+-   Expo Go app on your mobile device or an Android/iOS emulator.
 
-## Get a fresh project
+### Installation & Setup
 
-When you're ready, run:
+1.  **Clone the repository:**
+    ```bash
+    git clone <your-repository-url>
+    cd QuizMaster-Mobile
+    ```
 
-```bash
-npm run reset-project
-```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+3.  **Set up Firebase:**
+    This project uses Firebase for authentication and database services. You'll need to create your own Firebase project.
 
-## Learn more
+    -   Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project.
+    -   Enable **Authentication** (Email/Password provider).
+    -   Set up **Firestore Database**.
+    -   Get your Firebase project configuration keys.
+    -   Update the `firebaseConfig` object in [firebase.ts](firebase.ts) with your own keys.
 
-To learn more about developing your project with Expo, look at the following resources:
+    ```typescript
+    // filepath: firebase.ts
+    // ...existing code...
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    // ...existing code...
+    ```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Running the Application
 
-## Join the community
+Once the setup is complete, you can run the application using the Expo CLI.
 
-Join our community of developers creating universal apps.
+1.  **Start the development server:**
+    ```bash
+    npx expo start
+    ```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+2.  **Run on a device or emulator:**
+    -   Scan the QR code with the Expo Go app on your iOS or Android device.
+    -   Or, press `a` to run on an Android emulator, or `i` to run on an iOS simulator.
